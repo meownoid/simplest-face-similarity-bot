@@ -6,14 +6,14 @@ from telegram.ext import MessageHandler, Filters
 TOKEN = '<TOKEN>'
 
 
-def echo(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
+def handle_photo(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text='nice')
 
 
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
-echo_handler = MessageHandler(Filters.text, echo)
-dispatcher.add_handler(echo_handler)
+photo_handler = MessageHandler(Filters.photo, handle_photo)
+dispatcher.add_handler(photo_handler)
 
 updater.start_polling()
 updater.idle()
