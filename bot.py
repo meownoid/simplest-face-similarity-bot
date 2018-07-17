@@ -13,7 +13,7 @@ from PIL import Image
 logging.basicConfig(level='DEBUG')
 
 
-# здесь должен быть ваш токен
+# here should be your token
 TOKEN = '<TOKEN>'
 
 
@@ -37,8 +37,6 @@ def handle_photo(bot, update):
         image = Image.open(fd)
         image.load()
         image = np.asarray(image)
-
-    print(image)
 
     face_detects = face_detector(image, 1)
 
