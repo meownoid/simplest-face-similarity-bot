@@ -4,7 +4,6 @@ import numpy as np
 import pickle
 from PIL import Image
 
-
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor('assets/shape_predictor_5_face_landmarks.dat')
 face_recognition_model = dlib.face_recognition_model_v1('assets/dlib_face_recognition_resnet_model_v1.dat')

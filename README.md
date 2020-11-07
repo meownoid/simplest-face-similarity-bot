@@ -1,3 +1,4 @@
 # Simplest Face Similarity Bot
 
-Simplest but working telegram bot which tells you what celebrity you are similiar to.
+This is a simple telegram bot which tells you what celebrity you are similar to.
+

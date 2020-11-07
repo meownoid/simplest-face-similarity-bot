@@ -9,13 +9,10 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters
 from PIL import Image
 
-
 logging.basicConfig(level='DEBUG')
-
 
 # here should be your token
 TOKEN = '<TOKEN>'
-
 
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor('assets/shape_predictor_5_face_landmarks.dat')
@@ -57,7 +54,7 @@ def handle_photo(bot, update):
     best_match, best_distance = min(ds, key=itemgetter(1))
 
     bot.send_message(
-        chat_id=update.message.chat_id, 
+        chat_id=update.message.chat_id,
         text=f'your look exactly like *{best_match}*',
         parse_mode='Markdown'
     )
