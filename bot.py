@@ -55,7 +55,7 @@ def handle_photo(bot, update):
 
     bot.send_message(
         chat_id=update.message.chat_id,
-        text=f'your look exactly like *{best_match}*',
+        text=f'you look exactly like *{best_match}*',
         parse_mode='Markdown'
     )
 
