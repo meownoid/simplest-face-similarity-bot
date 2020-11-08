@@ -15,7 +15,7 @@ import config
 
 
 def download_unpack_bz2(url, path):
-    tmp_path = os.path.join(tempfile.gettempdir(), hashlib.md5(url).hexdigest())
+    tmp_path = os.path.join(tempfile.gettempdir(), hashlib.md5(url.encode('UTF-8')).hexdigest())
     print(f'Downloading {url}')
     urllib.request.urlretrieve(url, tmp_path)
     print(f'Unpacking {url}')
