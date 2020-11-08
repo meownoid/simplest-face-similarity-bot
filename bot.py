@@ -1,5 +1,6 @@
 import io
 import logging
+import multiprocessing
 import os
 import pickle
 import sys
@@ -8,6 +9,7 @@ from operator import itemgetter
 import dlib
 import numpy as np
 from PIL import Image
+from telegram import Bot
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import Updater
 
@@ -31,7 +33,9 @@ with open(os.path.join(config.ASSETS_DIR, 'embeddings.pickle'), 'rb') as f:
     star_embeddings = pickle.load(f)
 
 
-def handle_photo(bot, update):
+def handle_photo(update, _):
+    global bot
+
     message = update.message
     photo = message.photo[~0]
 
@@ -69,7 +73,8 @@ def handle_photo(bot, update):
     )
 
 
-updater = Updater(token=config.TOKEN)
+bot = Bot(token=config.TOKEN)
+updater = Updater(bot=bot, workers=multiprocessing.cpu_count())
 dispatcher = updater.dispatcher
 photo_handler = MessageHandler(Filters.photo, handle_photo)
 dispatcher.add_handler(photo_handler)
