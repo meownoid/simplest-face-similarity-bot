@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 
 Optionally change paths in the `config.py` and place your own photos to the photos folder.
-Then run `prepare.py` to download two pretrained models and create photos embeddings.
+Then run `prepare.py` to download two pretrained models and create photo embeddings.
 
 ```shell script
 python prepare.py
