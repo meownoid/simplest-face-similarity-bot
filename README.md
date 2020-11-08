@@ -2,6 +2,8 @@
 
 This is a simple telegram bot which tells you what celebrity you are similar to.
 
+![Example](https://storage.yandexcloud.net/meownoid-pro-static/external/github/simplest-face-similarity-bot/example.png)
+
 ## Usage
 
 Clone the repository.
