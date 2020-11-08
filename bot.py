@@ -1,24 +1,24 @@
 import io
-import dlib
 import logging
-import numpy as np
+import os
 import pickle
-
 from operator import itemgetter
-from telegram.ext import Updater
-from telegram.ext import MessageHandler, Filters
+
+import dlib
+import numpy as np
 from PIL import Image
+from telegram.ext import MessageHandler, Filters
+from telegram.ext import Updater
 
-logging.basicConfig(level='DEBUG')
+import config
 
-# here should be your token
-TOKEN = '<TOKEN>'
+logging.basicConfig(level=config.LOG_LEVEL)
 
 face_detector = dlib.get_frontal_face_detector()
-shape_predictor = dlib.shape_predictor('assets/shape_predictor_5_face_landmarks.dat')
-face_recognition_model = dlib.face_recognition_model_v1('assets/dlib_face_recognition_resnet_model_v1.dat')
+shape_predictor = dlib.shape_predictor(config.LANDMARKS_PATH)
+face_recognition_model = dlib.face_recognition_model_v1(config.MODEL_PATH)
 
-with open('assets/embeddings.pickle', 'rb') as f:
+with open(os.path.join(config.ASSETS_DIR, 'embeddings.pickle'), 'rb') as f:
     star_embeddings = pickle.load(f)
 
 
@@ -60,7 +60,7 @@ def handle_photo(bot, update):
     )
 
 
-updater = Updater(token=TOKEN)
+updater = Updater(token=config.TOKEN)
 dispatcher = updater.dispatcher
 photo_handler = MessageHandler(Filters.photo, handle_photo)
 dispatcher.add_handler(photo_handler)
