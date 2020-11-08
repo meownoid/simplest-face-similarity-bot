@@ -2,6 +2,7 @@ import io
 import logging
 import os
 import pickle
+import sys
 from operator import itemgetter
 
 import dlib
@@ -13,6 +14,14 @@ from telegram.ext import Updater
 import config
 
 logging.basicConfig(level=config.LOG_LEVEL)
+
+if not os.path.exists(config.LANDMARKS_PATH):
+    print(f'{config.LANDMARKS_PATH} does not exist')
+    sys.exit(1)
+
+if not os.path.exists(config.MODEL_PATH):
+    print(f'{config.MODEL_PATH}  does not exist')
+    sys.exit(1)
 
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor(config.LANDMARKS_PATH)

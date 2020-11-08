@@ -1,6 +1,10 @@
+import bz2
+import hashlib
 import os
 import pickle
+import shutil
 import sys
+import tempfile
 import urllib.request
 
 import dlib
@@ -9,15 +13,30 @@ from PIL import Image
 
 import config
 
-if not os.path.exists(config.LANDMARKS_PATH) and config.DOWNLOAD_ASSETS:
-    print('Downloading landmarks model')
+
+def download_unpack_bz2(url, path):
+    tmp_path = os.path.join(tempfile.gettempdir(), hashlib.md5(url).hexdigest())
+    print(f'Downloading {url}')
+    urllib.request.urlretrieve(url, tmp_path)
+    print(f'Unpacking {url}')
     os.makedirs(os.path.dirname(config.LANDMARKS_PATH), exist_ok=True)
-    urllib.request.urlretrieve(config.LANDMARKS_URL, config.LANDMARKS_PATH)
+    with bz2.open(tmp_path, 'rb') as zf, open(path, 'wb') as ff:
+        shutil.copyfileobj(zf, ff)
+
+
+if not os.path.exists(config.LANDMARKS_PATH) and config.DOWNLOAD_ASSETS:
+    download_unpack_bz2(config.LANDMARKS_URL, config.LANDMARKS_PATH)
 
 if not os.path.exists(config.MODEL_PATH) and config.DOWNLOAD_ASSETS:
-    print('Downloading face model')
-    os.makedirs(os.path.dirname(config.MODEL_PATH), exist_ok=True)
-    urllib.request.urlretrieve(config.MODEL_URL, config.MODEL_PATH)
+    download_unpack_bz2(config.MODEL_URL, config.MODEL_PATH)
+
+if not os.path.exists(config.LANDMARKS_PATH):
+    print(f'{config.LANDMARKS_PATH} does not exist')
+    sys.exit(1)
+
+if not os.path.exists(config.MODEL_PATH):
+    print(f'{config.MODEL_PATH}  does not exist')
+    sys.exit(1)
 
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor(config.LANDMARKS_PATH)
